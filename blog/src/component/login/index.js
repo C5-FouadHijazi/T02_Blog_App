@@ -65,6 +65,7 @@ export default function Login() {
                                 console.log("true");
                                 dispatch(setisLogin(true))
                                 localStorage.setItem("name", ele.name)
+                                localStorage.setItem("id", ele.id)
                                 navigate("/home");
                             } else {
                                 console.log("false");
