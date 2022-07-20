@@ -56,7 +56,7 @@ function App() {
   const getAlbums = () => {
     axios.get(`https://jsonplaceholder.typicode.com/albums`)
       .then((result) => {
-
+        console.log(result.data);
         dispatch(setAlbums(result.data))
       })
       .catch((err) => {

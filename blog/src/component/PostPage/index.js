@@ -16,10 +16,13 @@ import { setComments } from "../../redux/reducers/comments";
 import { setPosts } from "../../redux/reducers/posts";
 
 export default function Posts() {
-    const [showCategory, setShowCategory] = useState(false);
-    const [showXButton, setShowXbutton] = useState(false);
+
+    const [massge, setMessage] = useState("")
+    const [set, setSet] = useState(false)
     const [show, setShow] = useState(false)
-    
+
+
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -84,7 +87,8 @@ export default function Posts() {
             logout: state.auth.logout,
             posts: state.posts.posts,
             albums: state.albums.albums,
-            comments: state.comments.comments
+            comments: state.comments.comments,
+            id: state.auth.id
         }
     })
 
@@ -93,8 +97,6 @@ export default function Posts() {
     return (
         <div class="Posts-container">
             <Button variant="primary" onClick={() => {
-                 setShowCategory(true);
-                 setShowXbutton(true);
             }} >add Post</Button>{' '}
             <br />
             {state.posts.map((ele) => {
@@ -114,25 +116,27 @@ export default function Posts() {
                                             {ele.body}
                                         </Card.Text>
 
+
+
                                         {state.comments.map((elem) => {
-                                            console.log(ele.id === elem.postId);
                                             if (ele.id === elem.postId) {
                                                 return <div>{elem.body}</div>
                                             }
                                         })}
 
+                                        {(ele.userId == state.id) ?
+                                            (<>
+                                                <Button variant="primary" onClick={() => {
+                                                    if (ele.userId == state.id) {
+                                                        dispatch(deletePost(ele.id))
+                                                    }
+                                                }} >delete</Button>
+
+                                                <Button variant="primary">update</Button>
+                                            </>)
+                                            : ""}
 
 
-
-                                        <Button variant="primary" onClick={() => {
-                                            dispatch(deletePost(ele.id))
-                                        }} >delete</Button>{' '}
-
-                                        <Button variant="primary" onClick={() => {
-                                            setShow(true)
-                                        }} >Eidt</Button>{' '}
-
-                                        <Button variant="primary">update</Button>{' '}
                                     </Card.Body>
                                 </Card>
                             </Col>
@@ -140,10 +144,10 @@ export default function Posts() {
                     </Row>
                     <h1></h1>
                     <h5></h5>
-                </div>
+                </div >
 
             })}
 
-        </div>
+        </div >
     )
 }

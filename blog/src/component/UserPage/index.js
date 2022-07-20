@@ -118,9 +118,11 @@ export default function UserComponent() {
               <Card>
                 <Card.Header><h3>{element.name}</h3></Card.Header>
                 <Card.Body>
+                  <Card.Title><h5>Name :{element.name}</h5></Card.Title>
+              <Card.Title><h5>Address :{element.address.street}</h5></Card.Title>
                   <Card.Title><h5>Posts :{postsCounter}</h5></Card.Title>
                   <Card.Text><h5>Albums :{albumCounter}</h5></Card.Text>
-                  <Button href="/posts" variant="primary">see More </Button>
+          {/*         <Button href="/posts" variant="primary">see More </Button> */}
                 </Card.Body>
               </Card>
             </div>

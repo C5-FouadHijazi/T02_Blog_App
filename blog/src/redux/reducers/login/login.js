@@ -19,11 +19,11 @@ export const auth = createSlice({
 
             state.id = action.payload;
             console.log(action.payload ,"id");
-            localStorage.setItem("id", state.id );
+       
 
             state.userId = action.payload;
             console.log(action.payload ,"uderId");
-            localStorage.setItem("userId", state.userId);
+       
 
         },
         setisLogout : (state,action) =>{
