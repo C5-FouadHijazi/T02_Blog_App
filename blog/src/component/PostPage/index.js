@@ -7,7 +7,9 @@ import { useNavigate } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+
 import Button from 'react-bootstrap/Button';
+
 
 import { deletePost } from "../../redux/reducers/posts";
 import { setUsers } from "../../redux/reducers/users/users";
@@ -21,10 +23,7 @@ export default function Posts() {
     const [set, setSet] = useState(false)
     const [show, setShow] = useState(false)
 
-
-
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const getUsers = () => {
         axios.get(`https://jsonplaceholder.typicode.com/users`)
@@ -96,9 +95,12 @@ export default function Posts() {
 
     return (
         <div class="Posts-container">
+            <br/>
             <Button variant="primary" onClick={() => {
             }} >add Post</Button>{' '}
-            <br />
+
+            <br/>
+
             {state.posts.map((ele) => {
 
                 return <div key={ele.id}>
@@ -111,16 +113,16 @@ export default function Posts() {
                                     <Card.Body>
 
 
-                                        <Card.Title>{ele.title}</Card.Title>
+                                        <Card.Title><h3>{ele.title}</h3></Card.Title>
                                         <Card.Text>
-                                            {ele.body}
+                                           <h5>{ele.body}</h5>
                                         </Card.Text>
 
 
 
                                         {state.comments.map((elem) => {
                                             if (ele.id === elem.postId) {
-                                                return <div>{elem.body}</div>
+                                                return <Card body>{elem.body}</Card>
                                             }
                                         })}
 
@@ -131,7 +133,7 @@ export default function Posts() {
                                                         dispatch(deletePost(ele.id))
                                                     }
                                                 }} >delete</Button>
-
+                                                <i>   </i>
                                                 <Button variant="primary">update</Button>
                                             </>)
                                             : ""}
