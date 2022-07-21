@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-
 import Button from 'react-bootstrap/Button';
-
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 
 import { deletePost } from "../../redux/reducers/posts";
 import { setUsers } from "../../redux/reducers/users/users";
@@ -20,8 +20,25 @@ import { setPosts } from "../../redux/reducers/posts";
 export default function Posts() {
 
     const [massge, setMessage] = useState("")
-    const [set, setSet] = useState(false)
-    const [show, setShow] = useState(false)
+    const [deleted, setDeleted] = useState("");
+
+
+    const [show, setShow] = useState(false);
+    const [show2, setShow2] = useState(false);
+    const [show3, setShow3] = useState(false);
+
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const handleClose2 = () => setShow2(false);
+    const handleShow2 = () => setShow2(true);
+
+
+    const handleClose3 = () => setShow3(false);
+    const handleShow3 = () => setShow3(true);
+
+
 
     const dispatch = useDispatch();
 
@@ -91,15 +108,24 @@ export default function Posts() {
         }
     })
 
+    const deleteIem = (id2) => {
+
+        if (id2 == deleted) {
+            dispatch(deletePost(id2));
+            handleClose();
+        }
+    };
+
 
 
     return (
         <div class="Posts-container">
-            <br/>
-            <Button variant="primary" onClick={() => {
-            }} >add Post</Button>{' '}
+            <br />
+            <Button variant="primary" onClick={handleShow2}>
+                Add Post
+            </Button>
 
-            <br/>
+            <br />
 
             {state.posts.map((ele) => {
 
@@ -115,7 +141,7 @@ export default function Posts() {
 
                                         <Card.Title><h3>{ele.title}</h3></Card.Title>
                                         <Card.Text>
-                                           <h5>{ele.body}</h5>
+                                            <h5>{ele.body}</h5>
                                         </Card.Text>
 
 
@@ -129,19 +155,35 @@ export default function Posts() {
                                         {(ele.userId == state.id) ?
                                             (<>
                                                 <Button variant="primary" onClick={() => {
-                                                    if (ele.userId == state.id) {
-                                                        dispatch(deletePost(ele.id))
-                                                    }
+                                                    handleShow();
+                                                    setDeleted(ele.id);
                                                 }} >delete</Button>
+                                                <Modal show={show} onHide={handleClose}>
+                                                    <Modal.Header closeButton>
+                                                        <Modal.Title>Whould you like to Add</Modal.Title>
+                                                    </Modal.Header>
+                                                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                                                    <Modal.Footer>
+                                                        <Button variant="secondary" onClick={handleClose}>
+                                                            No
+                                                        </Button>
+                                                        <Button variant="primary" onClick={() => {
+
+                                                            deleteIem(deleted)
+
+                                                        }}> Yes </Button>
+                                                    </Modal.Footer>
+                                                </Modal>
                                                 <i>   </i>
-                                                <Button variant="primary">update</Button>
+                                                <Button variant="primary" onClick={handleShow3}>
+                                                    update
+                                                </Button>
                                             </>)
                                             : ""}
-
-
                                     </Card.Body>
                                 </Card>
                             </Col>
+
                         ))}
                     </Row>
                     <h1></h1>
@@ -150,6 +192,73 @@ export default function Posts() {
 
             })}
 
+   /* this Poup for Add  */
+            <Modal show={show2} onHide={handleClose2}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control
+                                type="email"
+                                placeholder="name@example.com"
+                                autoFocus
+                            />
+                        </Form.Group>
+                        <Form.Group
+                            className="mb-3"
+                            controlId="exampleForm.ControlTextarea1"
+                        >
+                            <Form.Label>Example textarea</Form.Label>
+                            <Form.Control as="textarea" rows={3} />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose2}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose2}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+             /* this Poup for Update  */
+            <Modal show={show3} onHide={handleClose3}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control
+                                type="email"
+                                placeholder="name@example.com"
+                                autoFocus
+                            />
+                        </Form.Group>
+                        <Form.Group
+                            className="mb-3"
+                            controlId="exampleForm.ControlTextarea1"
+                        >
+                            <Form.Label>Example textarea</Form.Label>
+                            <Form.Control as="textarea" rows={3} />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose3}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose3}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div >
     )
 }
