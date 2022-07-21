@@ -16,11 +16,15 @@ import { setUsers } from "../../redux/reducers/users/users";
 import { setAlbums } from "../../redux/reducers/albums";
 import { setComments } from "../../redux/reducers/comments";
 import { setPosts } from "../../redux/reducers/posts";
+import { updatePost } from "../../redux/reducers/posts";
 
 export default function Posts() {
 
     const [massge, setMessage] = useState("")
     const [deleted, setDeleted] = useState("");
+    const [title, setTitle] = useState("");
+    const [body, setBody] = useState("");
+    const [postid, setPostid] = useState("");
 
 
     const [show, setShow] = useState(false);
@@ -116,6 +120,16 @@ export default function Posts() {
         }
     };
 
+    const updateItem = (id) => {
+        dispatch(
+            updatePost({
+                title,
+                body,
+                id,
+            })
+        );
+    };
+
 
 
     return (
@@ -160,9 +174,9 @@ export default function Posts() {
                                                 }} >delete</Button>
                                                 <Modal show={show} onHide={handleClose}>
                                                     <Modal.Header closeButton>
-                                                        <Modal.Title>Whould you like to Add</Modal.Title>
+                                                        <Modal.Title>Whould you like to delete this</Modal.Title>
                                                     </Modal.Header>
-                                                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                                                    <Modal.Body>{ele.title} Post</Modal.Body>
                                                     <Modal.Footer>
                                                         <Button variant="secondary" onClick={handleClose}>
                                                             No
@@ -175,8 +189,13 @@ export default function Posts() {
                                                     </Modal.Footer>
                                                 </Modal>
                                                 <i>   </i>
-                                                <Button variant="primary" onClick={handleShow3}>
-                                                    update
+                                                <Button variant="primary" onClick={() => {
+                                                    handleShow3()
+                                                    setTitle(ele.title)
+                                                    setBody(ele.body)
+                                                    setPostid(ele.id)
+                                                }}>
+                                                    Update
                                                 </Button>
                                             </>)
                                             : ""}
@@ -192,7 +211,7 @@ export default function Posts() {
 
             })}
 
-   /* this Poup for Add  */
+
             <Modal show={show2} onHide={handleClose2}>
                 <Modal.Header closeButton>
                     <Modal.Title>Modal heading</Modal.Title>
@@ -226,27 +245,36 @@ export default function Posts() {
                 </Modal.Footer>
             </Modal>
 
-             /* this Poup for Update  */
+             // this Poup for Update
             <Modal show={show3} onHide={handleClose3}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Update Post</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Email address</Form.Label>
+                        <Form.Group
+                            className="mb-3"
+                            controlId="exampleForm.ControlInput1"
+                        >
+                            <Form.Label>Title</Form.Label>
                             <Form.Control
-                                type="email"
-                                placeholder="name@example.com"
-                                autoFocus
+                                type="text"
+                                placeholder="Post Title"
+                                onChange={(e) => { setTitle(e.target.value) }}
+
                             />
                         </Form.Group>
                         <Form.Group
                             className="mb-3"
                             controlId="exampleForm.ControlTextarea1"
                         >
-                            <Form.Label>Example textarea</Form.Label>
-                            <Form.Control as="textarea" rows={3} />
+                            <Form.Label>Body</Form.Label>
+                            <Form.Control as="textarea" rows={3}
+
+
+                                onChange={(e) => { setBody(e.target.value) }}
+
+                            />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -254,8 +282,15 @@ export default function Posts() {
                     <Button variant="secondary" onClick={handleClose3}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose3}>
-                        Save Changes
+
+                    <Button
+                        variant="primary"
+                        onClick={() => {
+                            handleClose3();
+                            dispatch(updatePost({ title: title, body: body, id: postid }))
+                        }}
+                    >
+                        update
                     </Button>
                 </Modal.Footer>
             </Modal>

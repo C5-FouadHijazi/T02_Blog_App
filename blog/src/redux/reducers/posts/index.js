@@ -18,13 +18,17 @@ export const posts = createSlice({
             });
         },
         updatePost: (state, action) => {
-            state.posts = state.posts.map((posts, index) => {
-                if (posts.id == action.payload.id) {
-                    return action.payload;
+            state.posts = state.posts.map((element) => {
+                console.log(action.payload);
+                if (element.id === action.payload.id) {
+                    element.body = action.payload.body || element.body
+                    element.title = action.payload.title || element.title
+                    return element
+                } else {
+                    return element;
                 }
-                return posts;
-            });
-        },
+            })
+        }
     }
 })
 
