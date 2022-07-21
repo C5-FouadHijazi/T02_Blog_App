@@ -162,7 +162,7 @@ export default function Posts() {
 
                                         {state.comments.map((elem) => {
                                             if (ele.id === elem.postId) {
-                                                return <Card body>{elem.body}</Card>
+                                                return <Card body><h6>Comment by : {elem.name}</h6> {elem.body}</Card>
                                             }
                                         })}
 
@@ -172,6 +172,7 @@ export default function Posts() {
                                                     handleShow();
                                                     setDeleted(ele.id);
                                                 }} >delete</Button>
+                                                {/* this Poup for delete */}
                                                 <Modal show={show} onHide={handleClose}>
                                                     <Modal.Header closeButton>
                                                         <Modal.Title>Whould you like to delete this</Modal.Title>
@@ -211,7 +212,7 @@ export default function Posts() {
 
             })}
 
-
+            {/* this Poup for Add */}
             <Modal show={show2} onHide={handleClose2}>
                 <Modal.Header closeButton>
                     <Modal.Title>Modal heading</Modal.Title>
@@ -245,7 +246,7 @@ export default function Posts() {
                 </Modal.Footer>
             </Modal>
 
-             // this Poup for Update
+            {/* this Poup for Update */}
             <Modal show={show3} onHide={handleClose3}>
                 <Modal.Header closeButton>
                     <Modal.Title>Update Post</Modal.Title>
