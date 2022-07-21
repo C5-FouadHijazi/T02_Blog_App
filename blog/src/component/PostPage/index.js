@@ -17,6 +17,7 @@ import { setAlbums } from "../../redux/reducers/albums";
 import { setComments } from "../../redux/reducers/comments";
 import { setPosts } from "../../redux/reducers/posts";
 import { updatePost } from "../../redux/reducers/posts";
+import { addPost } from "../../redux/reducers/posts";
 
 export default function Posts() {
 
@@ -130,6 +131,7 @@ export default function Posts() {
         );
     };
 
+    let counter = state.posts.length + 1
 
 
     return (
@@ -152,13 +154,23 @@ export default function Posts() {
                                     {/*      <Card.Img variant="top" src="holder.js/100px160" /> */}
                                     <Card.Body>
 
+                                        <br />
 
-                                        <Card.Title><h3>{ele.title}</h3></Card.Title>
+                                        <Card border="info" style={{ width: '38rem' }}>
+                                            <Card.Header>Post</Card.Header>
+                                            <Card.Body>
+                                                <Card.Title><h3>{ele.title}</h3></Card.Title>
+                                                <Card.Text>
+                                                    <h5>{ele.body}</h5>
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>
+                                        <br />
+
+                                        {/*   <Card.Title><h3>{ele.title}</h3></Card.Title>
                                         <Card.Text>
                                             <h5>{ele.body}</h5>
-                                        </Card.Text>
-
-
+                                        </Card.Text> */}
 
                                         {state.comments.map((elem) => {
                                             if (ele.id === elem.postId) {
@@ -215,24 +227,30 @@ export default function Posts() {
             {/* this Poup for Add */}
             <Modal show={show2} onHide={handleClose2}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Add Post</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Email address</Form.Label>
+                        <Form.Group
+                            className="mb-3"
+                            controlId="exampleForm.ControlInput1"
+                        >
+                            <Form.Label>Title</Form.Label>
                             <Form.Control
-                                type="email"
-                                placeholder="name@example.com"
-                                autoFocus
+                                type="text"
+                                placeholder="Post Title"
+                                onChange={(e) => { setTitle(e.target.value) }}
+
                             />
                         </Form.Group>
                         <Form.Group
                             className="mb-3"
                             controlId="exampleForm.ControlTextarea1"
                         >
-                            <Form.Label>Example textarea</Form.Label>
-                            <Form.Control as="textarea" rows={3} />
+                            <Form.Label>Body</Form.Label>
+                            <Form.Control as="textarea" rows={3}
+
+                                onChange={(e) => { setBody(e.target.value) }} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -240,8 +258,15 @@ export default function Posts() {
                     <Button variant="secondary" onClick={handleClose2}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose2}>
-                        Save Changes
+
+                    <Button
+                        variant="primary"
+                        onClick={() => {
+                            handleClose2();
+                            dispatch(addPost({ title: title, body: body, userId: state.id, postId: counter-- }))
+                        }}
+                    >
+                        Add
                     </Button>
                 </Modal.Footer>
             </Modal>
