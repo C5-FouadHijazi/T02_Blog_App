@@ -66,7 +66,7 @@ export default function UserComponent() {
       });
   }
   useEffect(() => {
-    if (state.login) {
+    if(state.login) {
 
     } else {
       navigate('/')
@@ -85,6 +85,7 @@ export default function UserComponent() {
     console.log(state);
     return {
       users: state.users.users,
+      id :state.auth.id,
       login: state.auth.login,
       logout: state.auth.logout,
       posts: state.posts.posts,

@@ -7,6 +7,8 @@ import Login from './component/login';
 import ColorSchemesExample from './component/Nav';
 import UserComponent from './component/UserPage';
 import Posts from './component/PostPage';
+import Profile from './component/UserProfile';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector } from "react-redux";
 import { setUsers } from './redux/reducers/users/users';
@@ -83,6 +85,8 @@ function App() {
         <Route path={"/users"} element={<UserComponent />} />
         <Route path={"/home"} element={<UserComponent />} />
         <Route path={"/posts"} element={<Posts />} />
+        <Route path={"/profile"} element={<Profile />} />
+
       </Routes>
 
     </div>

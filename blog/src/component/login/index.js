@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginContext } from '../../App';
-import { users } from '../../redux/reducers/users/users';
 import { setisLogin } from '../../redux/reducers/login/login';
-
 import "./style.css"
 
 export default function Login() {
@@ -24,7 +20,6 @@ export default function Login() {
             logout: state.auth.logout,
         }
     })
-
 
 
 
@@ -76,7 +71,7 @@ export default function Login() {
                     }}>Login</button>
 
 
-                    <p className={ state.login ? "successful" : "error Try Again"}>
+                    <p className={state.login ? "successful" : "error Try Again"}>
                         {message}
                     </p>
 

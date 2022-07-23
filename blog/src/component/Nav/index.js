@@ -30,7 +30,14 @@ function ColorSchemesExample() {
       users: state.users.users,
     }
   })
+  useEffect(() => {
+    if(state.login) {
 
+    } else {
+      navigate('/')
+    }
+
+  }, [])
 
 
   /*   email: Sincere@april.biz
@@ -39,11 +46,9 @@ function ColorSchemesExample() {
   return (
     <Navbar bg="primary" variant="dark">
       <Container>
-        <Navbar.Brand href="/users">{state.login ? localStorage.getItem('name')
+        <Navbar.Brand href="/profile">{state.login ? localStorage.getItem('name')
 
           : <h2 href="/" >Freedom</h2>}</Navbar.Brand>
-
-
 
         {state.login === true ? (
           <>
