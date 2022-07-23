@@ -56,14 +56,14 @@ function ColorSchemesExample() {
               <Nav.Link className="d-flex justify-content-center" href="/"></Nav.Link>
               <Nav.Link href="/users">Users</Nav.Link>
               <Nav.Link href="/posts">Posts</Nav.Link>
-              <Nav.Link onClick={logOut} href="/home">logout</Nav.Link>
+              <Nav.Link onClick={logOut} href="/home">Logout</Nav.Link>
 
             </Nav>
           </>
         ) : (
           <>
             <Nav className="d-flex justify-content-center">
-              <Nav.Link href="/">login</Nav.Link>
+              <Nav.Link href="/">Login</Nav.Link>
             </Nav>
           </>
 
